@@ -128,7 +128,7 @@ class Movies extends Component {
         {isLoading ? (
           <LoadingSpinner />
         ) : (
-          <div>
+          <React.Fragment>
             <div className="col-3">
               <ListGroup
                 items={this.state.genres}
@@ -162,7 +162,7 @@ class Movies extends Component {
                 onPageChange={this.handlePageChange}
               />
             </div>
-          </div>
+          </React.Fragment>
         )}
       </div>
     );
