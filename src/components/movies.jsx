@@ -30,12 +30,14 @@ class Movies extends Component {
       (progressEvent.loaded * 100) / progressEvent.total
     );
 
+    console.log(percentCompleted);
+
     this.setState({ loaded: percentCompleted })
   };
 
   async componentDidMount() {
     this.setState({ isLoading: true });
-    const { data } = await getGenres(this.onDownloadProgress);
+    const { data } = await getGenres();
     const genres = [{ _id: "", name: "All Genres" }, ...data];
 
     const { data: movies } = await getMovies(this.onDownloadProgress);

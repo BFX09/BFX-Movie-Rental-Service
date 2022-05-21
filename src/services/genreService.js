@@ -1,5 +1,5 @@
 import http from "./httpService";
 
-export function getGenres(onProgress) {
-  return http.get("/genres", { onDownloadProgress: onProgress });
+export function getGenres() {
+  return http.get("/genres");
 }
