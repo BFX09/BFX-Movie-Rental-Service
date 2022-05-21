@@ -6,8 +6,8 @@ function movieUrl(movieId) {
   return `${apiEndpoint}/${movieId}`;
 }
 
-export function getMovies(onProgress) {
-  return http.get(apiEndpoint, { onDownloadProgress: onProgress });
+export function getMovies() {
+  return http.get(apiEndpoint);
 }
 
 export function getMovie(id) {
