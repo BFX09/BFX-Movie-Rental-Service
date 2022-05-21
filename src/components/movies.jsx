@@ -22,14 +22,23 @@ class Movies extends Component {
     selectedGenre: null,
     sortColumn: { path: "title", order: "asc" },
     isLoading: false,
+    loaded: 0
+  };
+
+  onDownloadProgress = (progressEvent) => {
+    const percentCompleted = Math.round(
+      (progressEvent.loaded * 100) / progressEvent.total
+    );
+
+    this.setState({ loaded: percentCompleted })
   };
 
   async componentDidMount() {
     this.setState({ isLoading: true });
-    const { data } = await getGenres();
+    const { data } = await getGenres(this.onDownloadProgress);
     const genres = [{ _id: "", name: "All Genres" }, ...data];
 
-    const { data: movies } = await getMovies();
+    const { data: movies } = await getMovies(this.onDownloadProgress);
     this.setState({
       movies,
       genres,
@@ -117,7 +126,7 @@ class Movies extends Component {
 
   render() {
     const { length: count } = this.state.movies;
-    const { pageSize, currentPage, sortColumn, searchQuery, isLoading } =
+    const { pageSize, currentPage, sortColumn, searchQuery, isLoading, loaded } =
       this.state;
     const { user } = this.props;
 
@@ -126,7 +135,7 @@ class Movies extends Component {
     return (
       <div className="row">
         {isLoading ? (
-          <LoadingSpinner />
+          <LoadingSpinner loaded={loaded} />
         ) : (
           <React.Fragment>
             <div className="col-3">
