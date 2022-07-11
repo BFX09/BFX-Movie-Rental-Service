@@ -1,13 +1,16 @@
 import React from "react";
 import { NavLink, Link } from "react-router-dom";
+import {ReactComponent as Logo} from '../logo.svg';
+import "bootstrap/js/src/collapse.js";
 
 const NavBar = ({ user }) => {
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
-      <Link className="navbar-brand" to="/">
-        Vidly
+      <Link className="navbar-brand" to="/movies">
+        <Logo className="appLogo" />
       </Link>
       <button
+        style={{ outline: 0 }}
         className="navbar-toggler"
         type="button"
         data-toggle="collapse"
@@ -18,32 +21,22 @@ const NavBar = ({ user }) => {
       >
         <span className="navbar-toggler-icon"></span>
       </button>
-      <div className="collapse navbar-collapse" id="navbarNav">
+      <div
+        className="collapse navbar-collapse justify-content-end"
+        id="navbarNav"
+      >
         <ul className="navbar-nav">
-          <li className="nav-item">
-            <NavLink className="nav-link" to="/movies">
-              Movies <span className="sr-only">(current)</span>
-            </NavLink>
-          </li>
-          <li className="nav-item">
-            <NavLink className="nav-link" to="/customers">
-              Customers
-            </NavLink>
-          </li>
-          <li className="nav-item">
-            <NavLink className="nav-link" to="/rentals">
-              Rentals
-            </NavLink>
-          </li>
           {!user && (
             <React.Fragment>
               <li className="nav-item">
                 <NavLink className="nav-link" to="/login">
+                  <i className="fa fa-sign-in" aria-hidden="true"></i>
                   Login
                 </NavLink>
               </li>
               <li className="nav-item">
                 <NavLink className="nav-link" to="/register">
+                  <i className="fa fa-user-plus" aria-hidden="true"></i>
                   Register
                 </NavLink>
               </li>
@@ -53,11 +46,13 @@ const NavBar = ({ user }) => {
             <React.Fragment>
               <li className="nav-item">
                 <NavLink className="nav-link" to="/profile">
+                  <i className="fa fa-user-circle-o" aria-hidden="true"></i>
                   {user.name}
                 </NavLink>
               </li>
               <li className="nav-item">
                 <NavLink className="nav-link" to="/logout">
+                  <i className="fa fa-sign-out" aria-hidden="true"></i>
                   Logout
                 </NavLink>
               </li>

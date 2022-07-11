@@ -13,6 +13,8 @@ import { findBestMatch } from "string-similarity";
 import _ from "lodash";
 
 class Movies extends Component {
+  newMovie = React.createRef();
+
   state = {
     movies: [],
     genres: [],
@@ -22,6 +24,9 @@ class Movies extends Component {
     selectedGenre: null,
     sortColumn: { path: "title", order: "asc" },
     isLoading: false,
+    hoverEffectLeft: 0,
+    hoverEffectTop: 0,
+    showHoverEffect: true,
   };
 
   async componentDidMount() {
@@ -115,11 +120,25 @@ class Movies extends Component {
     return { totalCount: filtered.length, data: movies };
   };
 
+  follow = (e) => {
+    const { x, y } = this.newMovie.current.getBoundingClientRect();
+    this.setState({
+      hoverEffectLeft: e.clientX - parseInt(x),
+      hoverEffectTop: e.clientY - parseInt(y),
+    });
+  };
+
+  showHover = () => {
+    this.setState({ showHoverEffect: false });
+  };
+
+  hideHover = () => {
+    this.setState({ showHoverEffect: true });
+  };
+
   render() {
-    const { length: count } = this.state.movies;
-    const { pageSize, currentPage, sortColumn, searchQuery, isLoading } =
+    const { pageSize, currentPage, sortColumn, searchQuery, isLoading, hoverEffectLeft, hoverEffectTop, showHoverEffect } =
       this.state;
-    const { user } = this.props;
 
     const { totalCount, data: movies } = this.getPagedData();
 
@@ -137,16 +156,34 @@ class Movies extends Component {
               />
             </div>
             <div className="col">
-              {user && (
-                <Link
-                  to="/movies/new"
-                  className="btn btn-primary"
-                  style={{ marginBottom: 20 }}
+              <div className="info">
+                <p>Showing {totalCount} movies in the database.</p>
+                <div
+                  className="new-movie-container"
+                  onMouseOver={this.showHover}
+                  onMouseOut={this.hideHover}
+                  onMouseMove={this.follow}
                 >
-                  New Movie
-                </Link>
-              )}
-              <p>Showing {totalCount} movies in the database.</p>
+                  <Link
+                    ref={this.newMovie}
+                    to="/movies/new"
+                    className="new-movie"
+                    onMouseDown={this.hideHover}
+                    onMouseUp={this.showHover}
+                  >
+                    <div
+                      style={{
+                        top: hoverEffectTop,
+                        left: hoverEffectLeft,
+                      }}
+                      className="hoverEffect"
+                      hidden={showHoverEffect}
+                    ></div>
+                    <i style={{ marginRight: 2 }} className="fa fa-plus"></i>
+                    New Movie
+                  </Link>
+                </div>
+              </div>
               <SearchBox value={searchQuery} onChange={this.handleSearch} />
               <MoviesTable
                 movies={movies}
