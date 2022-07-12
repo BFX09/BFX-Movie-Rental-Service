@@ -48,11 +48,6 @@ code {
   }
 }
 
-.link-conatainer {
-  width: fit-content;
-  height: fit-content;
-}
-
 .new-movie {
   background: rgb(201, 92, 9);
   color: rgb(0, 0, 0);
@@ -70,6 +65,11 @@ code {
   background: #000;
   color: rgb(201, 92, 9) !important;
   text-decoration: none;
+}
+
+.new-movie:hover {
+  text-decoration: none;
+  color: #000;
 }
 
 .appLogo {
@@ -104,11 +104,6 @@ code {
   
   .nav-link.active::after {
     transform: scaleX(1);
-  }
-
-  .new-movie:hover {
-    text-decoration: none;
-    color: #000;
   }
   
   .hoverEffect {
