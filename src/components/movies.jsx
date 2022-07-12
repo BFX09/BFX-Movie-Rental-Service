@@ -137,13 +137,21 @@ class Movies extends Component {
   };
 
   render() {
-    const { pageSize, currentPage, sortColumn, searchQuery, isLoading, hoverEffectLeft, hoverEffectTop, showHoverEffect } =
-      this.state;
+    const {
+      pageSize,
+      currentPage,
+      sortColumn,
+      searchQuery,
+      isLoading,
+      hoverEffectLeft,
+      hoverEffectTop,
+      showHoverEffect,
+    } = this.state;
 
     const { totalCount, data: movies } = this.getPagedData();
 
     return (
-      <div className="row">
+      <div className={isLoading ? "row justify-content-center" : "row"}>
         {isLoading ? (
           <LoadingSpinner />
         ) : (
