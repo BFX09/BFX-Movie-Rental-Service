@@ -37,6 +37,17 @@ code {
   padding: 2.2rem;
 }
 
+@media screen and (max-width: 740px) {
+  .new-movie-container {
+    padding: 0;
+    white-space: nowrap;
+  }
+
+  .info {
+    margin-bottom: 0;
+  }
+}
+
 .link-conatainer {
   width: fit-content;
   height: fit-content;
@@ -58,19 +69,7 @@ code {
 .new-movie:active {
   background: #000;
   color: rgb(201, 92, 9) !important;
-}
-
-.new-movie:hover {
   text-decoration: none;
-  color: #000;
-}
-
-.hoverEffect {
-  position: absolute;
-  z-index: 1;
-  background: rgb(201, 92, 9);
-  border-radius: 100%;
-  box-shadow: 0 0 50px 25px rgb(229, 255, 0);
 }
 
 .appLogo {
@@ -89,10 +88,6 @@ code {
   transition: all 0.3s;
 }
 
-.list-group-item:hover {
-  background: rgb(233, 236, 239);
-}
-
 @media screen and (min-width: 991px) {
   .nav-link::after {
     display: block;
@@ -109,5 +104,22 @@ code {
   
   .nav-link.active::after {
     transform: scaleX(1);
+  }
+
+  .new-movie:hover {
+    text-decoration: none;
+    color: #000;
+  }
+  
+  .hoverEffect {
+    position: absolute;
+    z-index: 1;
+    background: rgb(201, 92, 9);
+    border-radius: 100%;
+    box-shadow: 0 0 50px 25px rgb(229, 255, 0);
+  }
+
+  .list-group-item:hover {
+    background: rgb(233, 236, 239);
   }
 }
