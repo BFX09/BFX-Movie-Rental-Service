@@ -156,13 +156,11 @@ class Movies extends Component {
           <LoadingSpinner />
         ) : (
           <React.Fragment>
-            <div className="col-3">
-              <ListGroup
-                items={this.state.genres}
-                selectedItem={this.state.selectedGenre}
-                onItemSelect={this.handleGenreSelect}
-              />
-            </div>
+            <ListGroup
+              items={this.state.genres}
+              selectedItem={this.state.selectedGenre}
+              onItemSelect={this.handleGenreSelect}
+            />
             <div className="col">
               <div className="info">
                 <p>Showing {totalCount} movies in the database.</p>

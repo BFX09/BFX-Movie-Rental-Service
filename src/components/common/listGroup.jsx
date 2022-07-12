@@ -20,52 +20,56 @@ const ListGroup = ({
     };
   }, [windowWidth]);
 
-  if (windowWidth > 740) {
+  if (windowWidth > 767) {
     return (
-      <ul className="list-group">
-        {items.map((item) => (
-          <li
-            onClick={() => onItemSelect(item)}
-            key={item[valueProperty]}
-            className={
-              item === selectedItem
-                ? "list-group-item active"
-                : "list-group-item"
-            }
-          >
-            {item[textProperty]}
-          </li>
-        ))}
-      </ul>
+      <div className="col-3">
+        <ul className="list-group">
+          {items.map((item) => (
+            <li
+              onClick={() => onItemSelect(item)}
+              key={item[valueProperty]}
+              className={
+                item === selectedItem
+                  ? "list-group-item active"
+                  : "list-group-item"
+              }
+            >
+              {item[textProperty]}
+            </li>
+          ))}
+        </ul>
+      </div>
     );
   }
 
   return (
-    <div className="dropdown">
-      <button
-        class="btn btn-primary dropdown-toggle"
-        type="button"
-        id="dropdownMenuButton"
-        data-toggle="dropdown"
-        aria-haspopup="true"
-        aria-expanded="false"
-      >
-        Filters
-      </button>
-      <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-        {items.map((item) => (
-          <button
-            onClick={() => onItemSelect(item)}
-            key={item[valueProperty]}
-            className={
-              item === selectedItem
-                ? "dropdown-item active"
-                : "dropdown-item"
-            }
-          >
-            {item[textProperty]}
-          </button>
-        ))}
+    <div className="col-5">
+      <div className="dropdown">
+        <button
+          class="btn btn-primary dropdown-toggle"
+          type="button"
+          id="dropdownMenuButton"
+          data-toggle="dropdown"
+          aria-haspopup="true"
+          aria-expanded="false"
+        >
+          Filters
+        </button>
+        <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          {items.map((item) => (
+            <button
+              onClick={() => onItemSelect(item)}
+              key={item[valueProperty]}
+              className={
+                item === selectedItem
+                  ? "dropdown-item active"
+                  : "dropdown-item"
+              }
+            >
+              {item[textProperty]}
+            </button>
+          ))}
+        </div>
       </div>
     </div>
   );
