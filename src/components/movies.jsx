@@ -104,7 +104,7 @@ class Movies extends Component {
         allMovies.forEach((movie) => titles.push(movie.title.toLowerCase()));
         const best = findBestMatch(searchQuery.toLowerCase(), titles).ratings;
         best.forEach((element) => {
-          if (element.rating > 0.45) result.push(element.target);
+          if (element.rating > 0.55) result.push(element.target);
         });
         if (result.length === 0)
           return m.title.toLowerCase().startsWith(searchQuery.toLowerCase());
