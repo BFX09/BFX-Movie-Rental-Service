@@ -1,9 +1,9 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import MoviesTable from "./moviesTable";
 import ListGroup from "./common/listGroup";
 import Pagination from "./common/pagination";
+import ShinyLinkButton from "./common/shinyLinkButton";
 import SearchBox from "./searchBox";
 import LoadingSpinner from "./common/loadingSpinner";
 import { getMovies, deleteMovie } from "../services/movieService";
@@ -13,8 +13,6 @@ import { findBestMatch } from "string-similarity";
 import _ from "lodash";
 
 class Movies extends Component {
-  newMovie = React.createRef();
-
   state = {
     movies: [],
     genres: [],
@@ -24,9 +22,6 @@ class Movies extends Component {
     selectedGenre: null,
     sortColumn: { path: "title", order: "asc" },
     isLoading: false,
-    hoverEffectLeft: 0,
-    hoverEffectTop: 0,
-    showHoverEffect: true,
   };
 
   async componentDidMount() {
@@ -120,33 +115,9 @@ class Movies extends Component {
     return { totalCount: filtered.length, data: movies };
   };
 
-  follow = (e) => {
-    const { x, y } = this.newMovie.current.getBoundingClientRect();
-    this.setState({
-      hoverEffectLeft: e.clientX - parseInt(x),
-      hoverEffectTop: e.clientY - parseInt(y),
-    });
-  };
-
-  showHover = () => {
-    this.setState({ showHoverEffect: false });
-  };
-
-  hideHover = () => {
-    this.setState({ showHoverEffect: true });
-  };
-
   render() {
-    const {
-      pageSize,
-      currentPage,
-      sortColumn,
-      searchQuery,
-      isLoading,
-      hoverEffectLeft,
-      hoverEffectTop,
-      showHoverEffect,
-    } = this.state;
+    const { pageSize, currentPage, sortColumn, searchQuery, isLoading } =
+      this.state;
 
     const { totalCount, data: movies } = this.getPagedData();
 
@@ -164,31 +135,11 @@ class Movies extends Component {
             <div className="col">
               <div className="info">
                 <p>Showing {totalCount} movies in the database.</p>
-                <div
-                  className="new-movie-container"
-                  onMouseOver={this.showHover}
-                  onMouseOut={this.hideHover}
-                  onMouseMove={this.follow}
-                >
-                  <Link
-                    ref={this.newMovie}
-                    to="/movies/new"
-                    className="new-movie"
-                    onMouseDown={this.hideHover}
-                    onMouseUp={this.showHover}
-                  >
-                    <div
-                      style={{
-                        top: hoverEffectTop,
-                        left: hoverEffectLeft,
-                      }}
-                      className="hoverEffect"
-                      hidden={showHoverEffect}
-                    ></div>
-                    <i style={{ marginRight: 2 }} className="fa fa-plus"></i>
-                    New Movie
-                  </Link>
-                </div>
+                <ShinyLinkButton
+                  linkAddress="/movies/new"
+                  buttonLabel="New Movie"
+                  buttonIcon='fa-plus'
+                />
               </div>
               <SearchBox value={searchQuery} onChange={this.handleSearch} />
               <MoviesTable

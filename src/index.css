@@ -33,43 +33,10 @@ code {
   height: 100px;
 }
 
-.new-movie-container {
-  padding: 2.2rem;
-}
-
 @media screen and (max-width: 740px) {
-  .new-movie-container {
-    padding: 0;
-    white-space: nowrap;
-  }
-
   .info {
     margin-bottom: 0;
   }
-}
-
-.new-movie {
-  background: rgb(201, 92, 9);
-  color: rgb(0, 0, 0);
-  padding: 1rem;
-  border-radius: 1rem;
-  border: 0;
-  outline: none;
-  font-weight: bold;
-  position: relative;
-  overflow: hidden;
-  display: block;
-}
-
-.new-movie:active {
-  background: #000;
-  color: rgb(201, 92, 9) !important;
-  text-decoration: none;
-}
-
-.new-movie:hover {
-  text-decoration: none;
-  color: #000;
 }
 
 .appLogo {
@@ -97,21 +64,13 @@ code {
     transform: scaleX(0);
     transition: transform 0.3s ease-in-out;
   }
-  
+
   .nav-link:hover::after {
     transform: scaleX(1);
   }
-  
+
   .nav-link.active::after {
     transform: scaleX(1);
-  }
-  
-  .hoverEffect {
-    position: absolute;
-    z-index: 1;
-    background: rgb(201, 92, 9);
-    border-radius: 100%;
-    box-shadow: 0 0 50px 25px rgb(229, 255, 0);
   }
 
   .list-group-item:hover {

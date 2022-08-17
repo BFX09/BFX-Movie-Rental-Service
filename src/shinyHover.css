@@ -1,0 +1,44 @@
+.shiny-container {
+  padding: 2.2rem;
+}
+
+.shiny-link {
+  background: rgb(201, 92, 9);
+  color: rgb(0, 0, 0);
+  padding: 1rem;
+  border-radius: 1rem;
+  border: 0;
+  outline: none;
+  font-weight: bold;
+  position: relative;
+  overflow: hidden;
+  display: block;
+}
+
+.shiny-link:active {
+  background: #000;
+  color: rgb(201, 92, 9) !important;
+  text-decoration: none;
+}
+
+.shiny-link:hover {
+  text-decoration: none;
+  color: #000;
+}
+
+@media screen and (max-width: 740px) {
+  .shiny-container {
+    padding: 0;
+    white-space: nowrap;
+  }
+}
+
+@media screen and (min-width: 991px) {
+  .hoverEffect {
+    position: absolute;
+    z-index: 1;
+    background: rgb(201, 92, 9);
+    border-radius: 100%;
+    box-shadow: 0 0 50px 25px rgb(229, 255, 0);
+  }
+}
