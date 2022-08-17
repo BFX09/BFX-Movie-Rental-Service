@@ -9,7 +9,7 @@ import LoadingSpinner from "./common/loadingSpinner";
 import { getMovies, deleteMovie } from "../services/movieService";
 import { getGenres } from "../services/genreService";
 import { paginate } from "../utils/paginate";
-import { findBestMatch } from "string-similarity";
+import { search } from "../utils/search";
 import _ from "lodash";
 
 class Movies extends Component {
@@ -93,18 +93,7 @@ class Movies extends Component {
 
     let filtered = allMovies;
     if (searchQuery)
-      filtered = allMovies.filter((m) => {
-        let titles = [];
-        let result = [];
-        allMovies.forEach((movie) => titles.push(movie.title.toLowerCase()));
-        const best = findBestMatch(searchQuery.toLowerCase(), titles).ratings;
-        best.forEach((element) => {
-          if (element.rating > 0.55) result.push(element.target);
-        });
-        if (result.length === 0)
-          return m.title.toLowerCase().startsWith(searchQuery.toLowerCase());
-        return result.includes(m.title.toLowerCase());
-      });
+      filtered = search(allMovies, searchQuery)
     else if (selectedGenre && selectedGenre._id)
       filtered = allMovies.filter((m) => m.genre._id === selectedGenre._id);
 
