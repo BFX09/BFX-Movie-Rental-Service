@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Route, Redirect, Switch } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
+import User from './components/user';
 import Movies from "./components/movies";
 import MovieForm from "./components/movieForm";
 import NotFound from "./components/notFound";
@@ -29,6 +30,12 @@ class App extends Component {
         <NavBar user={user} />
         <main className="container">
           <Switch>
+            {user && (
+              <Route
+                path={`/${user.name}`}
+                render={(props) => <User {...props} user={user} />}
+              ></Route>
+            )}
             <Route path="/register" component={RegisterForm} />
             <Route path="/login" component={LoginForm} />
             <Route path="/logout" component={Logout} />

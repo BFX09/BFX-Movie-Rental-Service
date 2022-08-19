@@ -12,6 +12,8 @@ import { paginate } from "../utils/paginate";
 import { search } from "../utils/search";
 import _ from "lodash";
 
+export const cache = {};
+
 class Movies extends Component {
   state = {
     movies: [],
@@ -25,17 +27,28 @@ class Movies extends Component {
   };
 
   async componentDidMount() {
-    this.setState({ isLoading: true });
-    const { data } = await getGenres();
-    const genres = [{ _id: "", name: "All Genres" }, ...data];
+    if (cache.movies && cache.genres) {
+      this.setState({
+        movies: cache.movies,
+        genres: cache.genres,
+        selectedGenre: cache.genres[0],
+      });
+    } else {
+      this.setState({ isLoading: true });
+      const { data } = await getGenres();
+      const genres = [{ _id: "", name: "All Genres" }, ...data];
 
-    const { data: movies } = await getMovies();
-    this.setState({
-      movies,
-      genres,
-      selectedGenre: genres[0],
-      isLoading: false,
-    });
+      const { data: movies } = await getMovies();
+      this.setState({
+        movies,
+        genres,
+        selectedGenre: genres[0],
+        isLoading: false,
+      });
+
+      cache.movies = movies;
+      cache.genres = genres;
+    }
   }
 
   handleDelete = async (movie) => {
@@ -92,8 +105,7 @@ class Movies extends Component {
     } = this.state;
 
     let filtered = allMovies;
-    if (searchQuery)
-      filtered = search(allMovies, searchQuery)
+    if (searchQuery) filtered = search(allMovies, searchQuery);
     else if (selectedGenre && selectedGenre._id)
       filtered = allMovies.filter((m) => m.genre._id === selectedGenre._id);
 
@@ -127,7 +139,7 @@ class Movies extends Component {
                 <ShinyLinkButton
                   linkAddress="/movies/new"
                   buttonLabel="New Movie"
-                  buttonIcon='fa-plus'
+                  buttonIcon="fa-plus"
                 />
               </div>
               <SearchBox value={searchQuery} onChange={this.handleSearch} />

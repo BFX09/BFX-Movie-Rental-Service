@@ -3,6 +3,7 @@ import Joi from "joi-browser";
 import Form from "./common/form";
 import { getMovie, saveMovie } from "../services/movieService";
 import { getGenres } from "../services/genreService";
+import { cache } from './movies';
 
 class MovieForm extends Form {
   state = {
@@ -67,6 +68,9 @@ class MovieForm extends Form {
 
   doSubmit = async () => {
     await saveMovie(this.state.data);
+
+    delete cache.movies;
+    delete cache.genres;
 
     this.props.history.push("/movies");
   };
