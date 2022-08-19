@@ -3,7 +3,8 @@ import Joi from "joi-browser";
 import Form from "./common/form";
 import { getMovie, saveMovie } from "../services/movieService";
 import { getGenres } from "../services/genreService";
-import { cache } from './movies';
+import { search } from "../utils/search";
+import { movieCache } from "./movies";
 
 class MovieForm extends Form {
   state = {
@@ -67,10 +68,14 @@ class MovieForm extends Form {
   }
 
   doSubmit = async () => {
-    await saveMovie(this.state.data);
+    const { data } = await saveMovie(this.state.data);
 
-    delete cache.movies;
-    delete cache.genres;
+    const cachedMovieId = search(movieCache.movies, data.title)[0]?._id;
+    if (cachedMovieId)
+      movieCache.movies = movieCache.movies.map((m) =>
+        m._id === cachedMovieId ? { ...data } : m
+      );
+    else movieCache.movies.push({ ...data })
 
     this.props.history.push("/movies");
   };

@@ -12,7 +12,7 @@ import { paginate } from "../utils/paginate";
 import { search } from "../utils/search";
 import _ from "lodash";
 
-export const cache = {};
+export const movieCache = {};
 
 class Movies extends Component {
   state = {
@@ -27,11 +27,11 @@ class Movies extends Component {
   };
 
   async componentDidMount() {
-    if (cache.movies && cache.genres) {
+    if (movieCache.movies && movieCache.genres) {
       this.setState({
-        movies: cache.movies,
-        genres: cache.genres,
-        selectedGenre: cache.genres[0],
+        movies: movieCache.movies,
+        genres: movieCache.genres,
+        selectedGenre: movieCache.genres[0],
       });
     } else {
       this.setState({ isLoading: true });
@@ -46,8 +46,8 @@ class Movies extends Component {
         isLoading: false,
       });
 
-      cache.movies = movies;
-      cache.genres = genres;
+      movieCache.movies = movies;
+      movieCache.genres = genres;
     }
   }
 
@@ -58,6 +58,7 @@ class Movies extends Component {
 
     try {
       await deleteMovie(movie._id);
+      movieCache.movies = movieCache.movies.filter(m => m._id !== movie._id);
     } catch (ex) {
       if (ex.response && ex.response.status === 404)
         toast.error("This movie has already been deleted!");
