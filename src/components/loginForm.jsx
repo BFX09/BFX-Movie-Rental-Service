@@ -48,4 +48,3 @@ class LoginForm extends Form {
 }
 
 export default LoginForm;
-
